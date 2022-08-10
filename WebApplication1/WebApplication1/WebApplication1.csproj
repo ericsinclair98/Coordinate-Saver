@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\Project_Images\Ark-Logo.jpg" />
+    <None Include="wwwroot\Project_Images\Minecraft.jpg" />
+    <None Include="wwwroot\Project_Images\Rust-Symbol.jpg" />
+    <None Include="wwwroot\Project_Images\Valheim_logo.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.7" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.7" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.7" />
