@@ -8,9 +8,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebApplication1.Data;
 using WebApplication1.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace WebApplication1.Controllers
 {
+
     public class CoordinatesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -20,12 +22,12 @@ namespace WebApplication1.Controllers
             _context = context;
         }
 
-        // GET: Coordinates
+        // GET: Coordinates && current user email
         public async Task<IActionResult> Index()
         {
-              return _context.Coordinate != null ? 
-                          View(await _context.Coordinate.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Coordinate'  is null.");
+            return _context.Coordinate != null ?
+                        View(await _context.Coordinate.ToListAsync()) :
+                        Problem("Entity set 'ApplicationDbContext.Coordinate'  is null.");
         }
         // GET: Coordinates/ShowSearchForm
         public async Task<IActionResult> ShowSearchForm()
@@ -36,7 +38,7 @@ namespace WebApplication1.Controllers
         // GET: Coordinates/ShowSearchResults
         public async Task<IActionResult> ShowSearchResults(String SearchPhrase)
         {
-            return View("Index",await _context.Coordinate.Where(j => j.Description.Contains(SearchPhrase)).ToListAsync());
+            return View("Index", await _context.Coordinate.Where(j => j.Description.Contains(SearchPhrase)).ToListAsync());
         }
 
         // GET: Coordinates/Details/5
@@ -70,7 +72,7 @@ namespace WebApplication1.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Description,XValue,YValue,ZValue")] Coordinate coordinate)
+        public async Task<IActionResult> Create([Bind("Id,Description,XValue,YValue,ZValue,Owner")] Coordinate coordinate)
         {
             if (ModelState.IsValid)
             {
@@ -104,7 +106,7 @@ namespace WebApplication1.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Description,XValue,YValue,ZValue")] Coordinate coordinate)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Description,XValue,YValue,ZValue,Owner")] Coordinate coordinate)
         {
             if (id != coordinate.Id)
             {
@@ -168,14 +170,15 @@ namespace WebApplication1.Controllers
             {
                 _context.Coordinate.Remove(coordinate);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool CoordinateExists(int id)
         {
-          return (_context.Coordinate?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Coordinate?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+
     }
 }

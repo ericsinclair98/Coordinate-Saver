@@ -16,10 +16,30 @@ html {
 body {
     margin-bottom: 60px;
     background-color: #292b2c;
+    min-height: 100%;
 }
 
 h1,h2,h3,h4,p{
     color: white;
+}
+
+/*Home page Welcome text*/
+.display-4 {
+    z-index: 800;
+    position: relative;
+    text-shadow: 2px 2px black;
+}
+
+nav{
+    z-index:1100;
+}
+
+.navbar-brand{
+    text-shadow: rgba(0,0,0.,0.4) 10px 10px;
+}
+
+footer {
+    z-index: 200;
 }
 
 
@@ -29,37 +49,52 @@ h1,h2,h3,h4,p{
 }
 
 .mySlides {
-    display: none;
+    display:flex;
+
 }
 
 img {
-    vertical-align: middle;
-}
-
-/* Slideshow container */
-/*.slideshow-container {
-    max-width: 1000px;
-    position: relative;
+    width: 100%;
     margin: auto;
-}
-.active {
-    background-color: #717171;
-}
-
-/* Fading animation */
-/*.fade {
-    animation-name: fade;
-    animation-duration: 1.5s;
+    display: block;
+    background-size: cover;
+    height: 1080px;
+    filter:blur(10px)
 }
 
-@keyframes fade {
-    from {
-        opacity: .4
+/*Slideshow container */
+.slideshow-container {
+    /* Set rules to fill background */
+    min-height: 100%;
+    min-width: 100%;
+    /* Set up proportionate scaling */
+    width: 100%;
+    height: 0;
+    /* Set up positioning */
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99;
+    
+}
+
+    .active {
+        background-color: #717171;
     }
 
-    to {
-        opacity: 1
+    /*Fading Animation*/
+    .fade {
+        animation-name: fade;
+        animation-duration: 4.2s;
     }
 
- */
+    @keyframes fade {
+        from {
+            opacity: .2
+        }
+
+        to {
+            opacity: 1
+        }
+    }
 

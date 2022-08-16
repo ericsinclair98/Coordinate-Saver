@@ -9,10 +9,13 @@
         public int XValue { get; set; }
         public int YValue { get; set; }
         public int ZValue { get; set; }
+        public string Owner { get; set; }
+
 
         public Coordinate()
         {
 
         }
+
     }
 }

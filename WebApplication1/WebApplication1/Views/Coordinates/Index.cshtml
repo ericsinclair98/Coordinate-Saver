@@ -1,9 +1,19 @@
-﻿@model IEnumerable<WebApplication1.Models.Coordinate>
+﻿
 
+@model IEnumerable<WebApplication1.Models.Coordinate>
+@using Microsoft.AspNetCore.Identity
 @{
     ViewData["Title"] = "Index";
+
+
 }
 
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@{
+    var usr = await UserManager.GetUserAsync(User);
+    var email = usr?.Email;
+}
 <h1>Your Coordinates</h1>
 
 <p>
@@ -12,6 +22,7 @@
 <table class="table bg-transparent text-light">
     <thead>
         <tr>
+            
             <th>
                 @Html.DisplayNameFor(model => model.Description)
             </th>
@@ -24,30 +35,42 @@
             <th>
                 @Html.DisplayNameFor(model => model.ZValue)
             </th>
-            <th></th>
+            <th>
+                XYZ- (Click to Copy)
+            </th>
         </tr>
     </thead>
+            
     <tbody>
+
 @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.XValue)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.YValue)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ZValue)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+            @if (email == item.Owner)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.XValue)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.YValue)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ZValue)
+                    </td>
+                    <td>
+                        <input class="bg-transparent text-light" onclick="this.select(); document.execCommand('copy');" type='text' value='@Html.Raw(item.XValue) @Html.Raw(item.YValue) @Html.Raw(item.ZValue)' readonly/>    
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> 
+
+                    </td>
+                </tr>
+            }
+            
+        }
     </tbody>
 </table>
